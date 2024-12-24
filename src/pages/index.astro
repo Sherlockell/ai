@@ -1,0 +1,25 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Hero from '../components/hero/Hero';
+import AIPipeline from '../components/pipeline/AIPipeline';
+import ValueProposition from '../components/ValueProposition';
+import ServiceHighlights from '../components/ServiceHighlights';
+import FeaturedService from '../components/FeaturedService';
+import Stats from '../components/Stats';
+import CTASection from '../components/CTASection';
+import '../styles/globals.css';
+---
+
+<Layout title="AIimplementation - AI Solutions for SMBs">
+  <Header />
+  <main class="bg-dark">
+    <Hero client:load />
+    <AIPipeline client:visible />
+    <Stats client:visible />
+    <ValueProposition client:visible />
+    <FeaturedService client:visible />
+    <ServiceHighlights client:visible />
+    <CTASection client:visible />
+  </main>
+</Layout>

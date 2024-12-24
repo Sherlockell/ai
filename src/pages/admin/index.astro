@@ -1,0 +1,16 @@
+---
+import ProtectedLayout from '../../layouts/ProtectedLayout.astro';
+import AdminSidebar from '../../components/admin/AdminSidebar.astro';
+import AdminOverview from '../../components/admin/AdminOverview';
+---
+
+<ProtectedLayout title="Admin Dashboard - AIimplementation">
+  <div class="bg-dark min-h-screen pt-16">
+    <div class="flex">
+      <AdminSidebar />
+      <main class="flex-1 p-8">
+        <AdminOverview client:load />
+      </main>
+    </div>
+  </div>
+</ProtectedLayout> 

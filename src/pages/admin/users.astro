@@ -1,0 +1,16 @@
+---
+import ProtectedLayout from '../../layouts/ProtectedLayout.astro';
+import AdminSidebar from '../../components/admin/AdminSidebar.astro';
+import UsersManager from '../../components/admin/UsersManager';
+---
+
+<ProtectedLayout title="Manage Users - Admin Dashboard">
+  <div class="bg-dark min-h-screen pt-16">
+    <div class="flex">
+      <AdminSidebar />
+      <main class="flex-1 p-8">
+        <UsersManager client:load />
+      </main>
+    </div>
+  </div>
+</ProtectedLayout> 

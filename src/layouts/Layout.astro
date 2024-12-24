@@ -1,0 +1,61 @@
+---
+import '@fontsource/inter/400.css';
+import '@fontsource/inter/500.css';
+import '@fontsource/inter/600.css';
+import '@fontsource/inter/700.css';
+import '@fontsource/space-grotesk/700.css';
+import { ViewTransitions } from 'astro:transitions';
+import LogoutButton from '../components/auth/LogoutButton';
+
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const { 
+  title,
+  description = "AI Implementation solutions for small and medium-sized businesses. Transform your business with cutting-edge AI technology."
+} = Astro.props;
+
+// Check if user is logged in
+const { data: { session } } = await Astro.locals.supabase.auth.getSession();
+---
+
+<!doctype html>
+<html lang="en" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="description" content={description} />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+    <ViewTransitions />
+    <script>
+      // Initialize theme
+      const theme = (() => {
+        if (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) {
+          return localStorage.getItem('theme');
+        }
+        return 'dark';
+      })();
+      
+      if (theme === 'light') {
+        document.documentElement.classList.remove('dark');
+      } else {
+        document.documentElement.classList.add('dark');
+      }
+    </script>
+    <script>
+      // Import and initialize auth
+      import { initAuth } from '../lib/stores/authStore';
+      window.addEventListener('load', () => {
+        initAuth();
+      });
+    </script>
+  </head>
+  <body class="bg-white dark:bg-dark transition-colors duration-300">
+    <slot />
+    {session && <LogoutButton client:load />}
+  </body>
+</html>

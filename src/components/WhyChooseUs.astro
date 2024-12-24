@@ -1,0 +1,56 @@
+---
+const stats = [
+  { value: '100+', label: 'SMBs Empowered' },
+  { value: '95%', label: 'Customer Satisfaction' },
+  { value: '24/7', label: 'Support Available' },
+  { value: '50%', label: 'Average Cost Reduction' }
+];
+
+const differentiators = [
+  {
+    title: 'SMB Expertise',
+    description: 'Deep understanding of small and medium business challenges and needs.'
+  },
+  {
+    title: 'Affordable Solutions',
+    description: 'Scalable pricing models that grow with your business.'
+  },
+  {
+    title: 'Complete Support',
+    description: 'End-to-end assistance from implementation to training and beyond.'
+  }
+];
+---
+
+<section class="py-24 bg-white">
+  <div class="max-w-7xl mx-auto px-6 lg:px-8">
+    <div class="text-center max-w-2xl mx-auto mb-16">
+      <h2 class="text-3xl font-display font-bold tracking-tight sm:text-4xl mb-4">
+        The Trusted AI Partner for SMBs
+      </h2>
+      <p class="text-lg text-gray-600">
+        Join hundreds of businesses that trust us with their AI transformation
+      </p>
+    </div>
+
+    <dl class="grid grid-cols-2 gap-x-8 gap-y-16 text-center lg:grid-cols-4 mb-16">
+      {stats.map(stat => (
+        <div class="mx-auto flex max-w-xs flex-col gap-y-4">
+          <dt class="text-base leading-7 text-gray-600">{stat.label}</dt>
+          <dd class="order-first text-3xl font-semibold tracking-tight text-gray-900 sm:text-5xl">
+            {stat.value}
+          </dd>
+        </div>
+      ))}
+    </dl>
+
+    <div class="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
+      {differentiators.map(diff => (
+        <div class="relative p-8 bg-gray-50 rounded-2xl">
+          <h3 class="text-xl font-semibold mb-3">{diff.title}</h3>
+          <p class="text-gray-600">{diff.description}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

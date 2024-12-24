@@ -1,0 +1,35 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/Header.astro';
+import AdminSidebar from '../../components/admin/AdminSidebar.astro';
+import PostsManager from '../../components/admin/PostsManager';
+
+// Auth check (same as index.astro)
+const { data: { session } } = await Astro.locals.supabase.auth.getSession();
+if (!session) {
+  return Astro.redirect('/login');
+}
+
+// Fetch user role
+const { data: profile } = await Astro.locals.supabase
+  .from('profiles')
+  .select('role')
+  .eq('id', session.user.id)
+  .single();
+
+if (profile?.role !== 'admin') {
+  return Astro.redirect('/');
+}
+---
+
+<Layout title="Manage Posts - Admin Dashboard">
+  <Header />
+  <div class="bg-dark min-h-screen pt-16">
+    <div class="flex">
+      <AdminSidebar />
+      <main class="flex-1 p-8">
+        <PostsManager client:load />
+      </main>
+    </div>
+  </div>
+</Layout> 

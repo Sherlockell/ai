@@ -1,0 +1,108 @@
+---
+import type { Service } from './types';
+
+interface Props {
+  service: Service;
+}
+
+const { service } = Astro.props;
+---
+
+<div 
+  class="group relative p-8 rounded-2xl bg-white/5 backdrop-blur-sm border border-white/10 transition-all duration-500 hover:border-white/20"
+  data-service-card
+>
+  {/* Interactive background gradient */}
+  <div class="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+    <div class="absolute inset-0 bg-gradient-to-r from-blue-500/10 to-violet-500/10 rounded-2xl blur-xl" data-gradient></div>
+  </div>
+
+  {/* Card content */}
+  <div class="relative z-10">
+    <div 
+      class="inline-flex items-center justify-center p-3 bg-gradient-to-r from-blue-500/20 to-violet-500/20 rounded-xl mb-5 transition-transform duration-500 group-hover:scale-110"
+    >
+      <svg
+        class="w-6 h-6 text-blue-400"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke-width="1.5"
+        stroke="currentColor"
+      >
+        <path stroke-linecap="round" stroke-linejoin="round" d={service.icon}></path>
+      </svg>
+    </div>
+
+    <h3 class="text-2xl font-display font-bold text-white mb-4 transition-colors duration-300 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-blue-400 group-hover:to-violet-400">
+      {service.title}
+    </h3>
+    
+    <p class="text-gray-300 mb-6 transition-colors duration-300 group-hover:text-white/90">
+      {service.description}
+    </p>
+
+    <ul class="space-y-3">
+      {service.features.map((feature) => (
+        <li class="flex items-start transform transition-transform duration-300 hover:translate-x-2">
+          <svg 
+            class="w-5 h-5 text-blue-400 mt-1 mr-3 transition-transform duration-300 group-hover:scale-110" 
+            fill="none" 
+            viewBox="0 0 24 24" 
+            stroke="currentColor"
+          >
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+          </svg>
+          <span class="text-gray-300 transition-colors duration-300 group-hover:text-white/90">
+            {feature}
+          </span>
+        </li>
+      ))}
+    </ul>
+  </div>
+</div>
+
+<script>
+  function setupCardInteraction() {
+    const cards = document.querySelectorAll('[data-service-card]');
+    
+    cards.forEach(card => {
+      const gradient = card.querySelector('[data-gradient]');
+      
+      card.addEventListener('mousemove', (e) => {
+        if (!gradient) return;
+        
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        
+        // Calculate relative position (0-1)
+        const xPercent = x / rect.width;
+        const yPercent = y / rect.height;
+        
+        // Create dynamic gradient position
+        const gradientX = 50 + (xPercent - 0.5) * 100;
+        const gradientY = 50 + (yPercent - 0.5) * 100;
+        
+        gradient.style.background = `
+          radial-gradient(
+            circle at ${gradientX}% ${gradientY}%,
+            rgba(96, 165, 250, 0.15) 0%,
+            rgba(167, 139, 250, 0.15) 50%,
+            transparent 100%
+          )
+        `;
+      });
+      
+      card.addEventListener('mouseleave', () => {
+        if (!gradient) return;
+        gradient.style.background = '';
+      });
+    });
+  }
+
+  // Setup on page load
+  setupCardInteraction();
+
+  // Setup on view transitions
+  document.addEventListener('astro:page-load', setupCardInteraction);
+</script>

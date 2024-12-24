@@ -1,0 +1,20 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import LoginForm from '../components/auth/LoginForm';
+
+// If already logged in, redirect to admin
+const { data: { session } } = await Astro.locals.supabase.auth.getSession();
+if (session) {
+  return Astro.redirect('/admin');
+}
+---
+
+<Layout title="Login - AIimplementation">
+  <Header />
+  <main class="bg-dark min-h-screen pt-32 pb-24">
+    <div class="max-w-md mx-auto px-6 lg:px-8">
+      <LoginForm client:load />
+    </div>
+  </main>
+</Layout> 

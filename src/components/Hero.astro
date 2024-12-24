@@ -1,0 +1,154 @@
+---
+import { Image } from 'astro:assets';
+---
+
+<div class="relative isolate min-h-screen overflow-hidden bg-dark">
+  <!-- Background effects -->
+  <div class="absolute inset-0 bg-[radial-gradient(circle_at_60%_-20%,#3d1d6d_0%,#0a0118_50%)]"></div>
+  <div class="absolute inset-0 bg-[radial-gradient(circle_at_40%_120%,#6d1d3d_0%,transparent_50%)]"></div>
+  
+  <!-- Stars effect -->
+  <div class="absolute inset-0" aria-hidden="true">
+    {Array.from({ length: 20 }).map((_, i) => (
+      <div class="animate-pulse absolute h-1 w-1 bg-white rounded-full"
+           style={`left: ${Math.random() * 100}%; top: ${Math.random() * 100}%; animation-delay: ${Math.random() * 2}s;`}>
+      </div>
+    ))}
+  </div>
+
+  <!-- Content -->
+  <div class="relative mx-auto max-w-7xl px-6 pt-32 sm:pt-40 lg:px-8 lg:pt-44">
+    <div class="mx-auto max-w-2xl gap-x-14 lg:mx-0 lg:flex lg:max-w-none lg:items-center">
+      <div class="relative z-10 w-full max-w-xl lg:shrink-0 xl:max-w-2xl">
+        <h1 class="text-4xl font-display font-bold tracking-tight text-white sm:text-6xl">
+          <span class="inline-block text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-violet-400">
+            Empowering SMBs
+          </span>
+          <br />
+          with the Future of AI
+        </h1>
+        <p class="mt-6 text-lg leading-8 text-gray-300">
+          Transform your business with cutting-edge AI solutions designed specifically for small and medium-sized businesses. 
+          Unlock efficiency, drive growth, and stay ahead of the competition.
+        </p>
+        <div class="mt-10 flex items-center gap-x-6">
+          <a
+            href="/contact"
+            class="rounded-lg bg-gradient-to-r from-blue-500 to-violet-500 px-6 py-3 text-base font-semibold text-white shadow-lg hover:from-blue-600 hover:to-violet-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-violet-600 transition-all duration-200"
+          >
+            Get Started
+          </a>
+          <a href="/services" class="text-base font-semibold leading-7 text-gray-300 hover:text-white transition-colors">
+            Learn more <span aria-hidden="true">→</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Neural network visualization -->
+      <div class="mt-14 flex justify-end gap-8 sm:-mt-44 sm:justify-start sm:pl-20 lg:mt-0 lg:pl-0">
+        <div class="relative">
+          <div class="absolute -inset-x-20 -top-20 -bottom-20 [mask-image:radial-gradient(closest-side,white,transparent)]">
+            <div class="absolute inset-0 bg-gradient-to-r from-violet-500 to-blue-500 opacity-20 blur-3xl"></div>
+          </div>
+          <div class="relative aspect-[9/10] w-[18rem] sm:w-[24rem] rounded-2xl bg-gray-900/5 p-6 backdrop-blur-sm ring-1 ring-white/10">
+            <!-- Neural network nodes and connections will be added with JavaScript -->
+            <div id="neural-network" class="absolute inset-0"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// Neural network animation
+class NeuralNetwork {
+  constructor() {
+    this.canvas = document.createElement('canvas');
+    this.ctx = this.canvas.getContext('2d');
+    this.container = document.getElementById('neural-network');
+    this.container.appendChild(this.canvas);
+    
+    this.resize();
+    window.addEventListener('resize', () => this.resize());
+    
+    this.nodes = [];
+    this.connections = [];
+    this.init();
+    this.animate();
+  }
+  
+  resize() {
+    this.width = this.container.clientWidth;
+    this.height = this.container.clientHeight;
+    this.canvas.width = this.width;
+    this.canvas.height = this.height;
+  }
+  
+  init() {
+    // Create nodes
+    for(let i = 0; i < 20; i++) {
+      this.nodes.push({
+        x: Math.random() * this.width,
+        y: Math.random() * this.height,
+        vx: (Math.random() - 0.5) * 0.5,
+        vy: (Math.random() - 0.5) * 0.5,
+        radius: Math.random() * 2 + 1
+      });
+    }
+    
+    // Create connections
+    for(let i = 0; i < this.nodes.length; i++) {
+      for(let j = i + 1; j < this.nodes.length; j++) {
+        if(Math.random() < 0.3) {
+          this.connections.push([i, j]);
+        }
+      }
+    }
+  }
+  
+  animate() {
+    this.ctx.clearRect(0, 0, this.width, this.height);
+    
+    // Update and draw connections
+    this.ctx.strokeStyle = 'rgba(255, 255, 255, 0.1)';
+    this.ctx.lineWidth = 0.5;
+    
+    this.connections.forEach(([i, j]) => {
+      const nodeA = this.nodes[i];
+      const nodeB = this.nodes[j];
+      const dx = nodeB.x - nodeA.x;
+      const dy = nodeB.y - nodeA.y;
+      const dist = Math.sqrt(dx * dx + dy * dy);
+      
+      if(dist < 100) {
+        this.ctx.beginPath();
+        this.ctx.moveTo(nodeA.x, nodeA.y);
+        this.ctx.lineTo(nodeB.x, nodeB.y);
+        this.ctx.stroke();
+      }
+    });
+    
+    // Update and draw nodes
+    this.nodes.forEach(node => {
+      node.x += node.vx;
+      node.y += node.vy;
+      
+      if(node.x < 0 || node.x > this.width) node.vx *= -1;
+      if(node.y < 0 || node.y > this.height) node.vy *= -1;
+      
+      this.ctx.beginPath();
+      this.ctx.arc(node.x, node.y, node.radius, 0, Math.PI * 2);
+      this.ctx.fillStyle = 'rgba(255, 255, 255, 0.5)';
+      this.ctx.fill();
+    });
+    
+    requestAnimationFrame(() => this.animate());
+  }
+}
+
+// Initialize neural network when the DOM is loaded
+document.addEventListener('DOMContentLoaded', () => {
+  new NeuralNetwork();
+});
+</script>

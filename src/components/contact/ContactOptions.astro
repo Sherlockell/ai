@@ -1,0 +1,68 @@
+---
+const contactOptions = [
+  {
+    title: 'Email',
+    description: 'Drop us a line anytime',
+    value: 'hello@aiimplementation.com',
+    icon: 'M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75'
+  },
+  {
+    title: 'Phone',
+    description: 'Mon-Fri from 9am to 6pm',
+    value: '+1 (555) 123-4567',
+    icon: 'M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z'
+  },
+  {
+    title: 'Live Chat',
+    description: '24/7 Support Available',
+    value: 'Start a conversation',
+    icon: 'M7.5 8.25h9m-9 3H12m-9.75 1.51c0 1.6 1.123 2.994 2.707 3.227 1.129.166 2.27.293 3.423.379.35.026.67.21.865.501L12 21l2.755-4.133a1.14 1.14 0 01.865-.501 48.172 48.172 0 003.423-.379c1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0012 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018z'
+  }
+];
+---
+
+<div class="space-y-8">
+  <div class="relative p-8 rounded-2xl bg-white/5 backdrop-blur-sm border border-white/10">
+    <h2 class="text-2xl font-display font-bold text-white mb-6">Other Ways to Connect</h2>
+    
+    <div class="space-y-6">
+      {contactOptions.map((option) => (
+        <div class="flex items-start space-x-4">
+          <div class="flex-shrink-0">
+            <div class="p-2 bg-gradient-to-r from-blue-500/20 to-violet-500/20 rounded-lg">
+              <svg
+                class="w-6 h-6 text-blue-400"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+              >
+                <path stroke-linecap="round" stroke-linejoin="round" d={option.icon}></path>
+              </svg>
+            </div>
+          </div>
+          <div>
+            <h3 class="text-lg font-semibold text-white">{option.title}</h3>
+            <p class="text-sm text-gray-400 mb-1">{option.description}</p>
+            <a 
+              href="#" 
+              class="text-blue-400 hover:text-blue-300 transition-colors"
+            >
+              {option.value}
+            </a>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+
+  <div class="relative p-8 rounded-2xl bg-gradient-to-r from-blue-500/10 to-violet-500/10 backdrop-blur-sm border border-white/10">
+    <h2 class="text-2xl font-display font-bold text-white mb-4">Office Location</h2>
+    <p class="text-gray-300">
+      123 AI Street<br />
+      Tech District<br />
+      San Francisco, CA 94105<br />
+      United States
+    </p>
+  </div>
+</div>

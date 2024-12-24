@@ -1,0 +1,53 @@
+---
+import Layout from './Layout.astro';
+import Header from '../components/Header.astro';
+import LogoutButton from '../components/auth/LogoutButton';
+
+interface Props {
+  title: string;
+}
+
+const { title } = Astro.props;
+
+// Check authentication
+const { data: { session } } = await Astro.locals.supabase.auth.getSession();
+if (!session) {
+  return Astro.redirect('/login');
+}
+
+// Debug session
+console.log('Session:', {
+  id: session.user.id,
+  email: session.user.email
+});
+
+// Check if user has admin role with error logging
+const { data: profile, error: profileError } = await Astro.locals.supabase
+  .from('profiles')
+  .select('*')  // Select all fields to debug
+  .eq('id', session.user.id)
+  .single();
+
+console.log('Profile query:', { 
+  userId: session.user.id, 
+  email: session.user.email,
+  profile,
+  error: profileError?.message,
+  query: `SELECT * FROM profiles WHERE id = '${session.user.id}'`
+});
+
+if (!profile || profile.role !== 'admin') {
+  console.log('Access denied:', {
+    hasProfile: !!profile,
+    role: profile?.role,
+    expectedRole: 'admin'
+  });
+  return Astro.redirect('/');
+}
+---
+
+<Layout title={title}>
+  <Header />
+  <LogoutButton client:load />
+  <slot />
+</Layout> 

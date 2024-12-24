@@ -1,0 +1,18 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/Header.astro';
+import BlogEditor from '../../components/blog/editor/BlogEditor';
+
+// Redirect if not authenticated
+const { data: { session } } = await Astro.locals.supabase.auth.getSession();
+if (!session) {
+  return Astro.redirect('/login');
+}
+---
+
+<Layout title="New Blog Post - AIimplementation">
+  <Header />
+  <main class="bg-dark min-h-screen pt-32 pb-24">
+    <BlogEditor client:load />
+  </main>
+</Layout>

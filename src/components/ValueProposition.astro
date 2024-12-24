@@ -1,0 +1,52 @@
+---
+const benefits = [
+  {
+    title: 'Save Time',
+    description: 'Automate repetitive tasks and streamline your workflows with AI-powered solutions.',
+    icon: 'M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z'
+  },
+  {
+    title: 'Boost Revenue',
+    description: 'Leverage predictive analytics to identify trends and optimize business decisions.',
+    icon: 'M2.25 18L9 11.25l4.306 4.307a11.95 11.95 0 015.814-5.519l2.74-1.22m0 0l-5.94-2.28m5.94 2.28l-2.28 5.941'
+  },
+  {
+    title: 'Stay Competitive',
+    description: 'Keep ahead of the curve with cutting-edge AI solutions tailored for your business.',
+    icon: 'M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z'
+  }
+];
+---
+
+<section class="py-24 bg-gradient-to-b from-gray-50 to-white">
+  <div class="max-w-7xl mx-auto px-6 lg:px-8">
+    <div class="text-center max-w-2xl mx-auto mb-16">
+      <h2 class="text-3xl font-display font-bold tracking-tight sm:text-4xl mb-4">
+        AI Made Simple, AI That Works for You
+      </h2>
+      <p class="text-lg text-gray-600">
+        Transform your business with powerful AI solutions designed specifically for SMBs.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
+      {benefits.map(benefit => (
+        <div class="relative p-8 bg-white rounded-2xl shadow-sm hover:shadow-md transition-shadow">
+          <div class="inline-flex items-center justify-center p-2 bg-primary-100 rounded-xl mb-5">
+            <svg
+              class="w-6 h-6 text-primary-600"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d={benefit.icon}></path>
+            </svg>
+          </div>
+          <h3 class="text-xl font-semibold mb-3">{benefit.title}</h3>
+          <p class="text-gray-600">{benefit.description}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
